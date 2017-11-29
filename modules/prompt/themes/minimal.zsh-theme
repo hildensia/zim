@@ -13,6 +13,15 @@ function {
   ERR_COLOR='%F{red}'
 }
 
+# Prints the first non-empty string in the arguments array.
+function coalesce {
+  for arg in $argv; do
+      print "$arg"
+      return 0
+  done
+  return 1
+}
+
 prompt_minimal_user() {
   print -n '%(!.${ON_COLOR}.${OFF_COLOR})${PROMPT_CHAR}'
 }
