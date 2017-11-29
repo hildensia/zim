@@ -60,6 +60,10 @@ prompt_minimal_precmd() {
   (( ${+functions[git-info]} )) && git-info
 }
 
+prompt_minimal_hostname() {
+  print "%F{green} ${HOSTALIAS}"
+}
+
 prompt_minimal_setup() {
   zle -N zle-line-init
   zle -N zle-keymap-select
@@ -82,7 +86,7 @@ prompt_minimal_setup() {
     'color' '$(coalesce "%D" "%V" "%B" "%A" "${ON_COLOR}")'
 
   PROMPT="$(prompt_minimal_user)$(prompt_minimal_jobs)\$(prompt_minimal_vimode)$(prompt_minimal_status)%f "
-  RPROMPT='$(prompt_minimal_path)$(prompt_minimal_git)'
+  RPROMPT='$(prompt_minimal_path)$(prompt_minimal_git)$(prompt_minimal_hostname)'
 }
 
 prompt_minimal_setup "$@"
