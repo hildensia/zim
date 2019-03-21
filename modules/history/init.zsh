@@ -21,7 +21,7 @@ setopt EXTENDED_HISTORY
 setopt INC_APPEND_HISTORY
 
 # Shares history across all sessions rather than waiting for a new shell invocation to read the history file.
-setopt SHARE_HISTORY
+# setopt SHARE_HISTORY
 
 # Do not enter command lines into the history list if they are duplicates of the previous event.
 setopt HIST_IGNORE_DUPS
