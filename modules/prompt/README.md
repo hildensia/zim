@@ -1,9 +1,9 @@
-Prompt
+prompt
 ======
 
 Initializes and provides customizable prompt themes.
 
-Images of various prompt themes can be found on the [wiki](https://github.com/Eriner/zim/wiki/Themes).
+Images of various prompt themes can be found on the [wiki](https://github.com/zimfw/zimfw/wiki/Themes).
 
 A list of available prompts can be found by running `prompt -l`.
 

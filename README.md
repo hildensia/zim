@@ -1,8 +1,8 @@
-ZIM - Zsh IMproved
-==================
+Zsh IMproved FrameWork
+======================
 
 <div align="center">
-  <a href="https://github.com/Eriner/zim">
+  <a href="https://github.com/zimfw/zimfw">
     <img width=650px src="https://i.eriner.me/zim_banner.png">
   </a>
 </div>
@@ -26,10 +26,10 @@ For a speed comparison between Zim and other frameworks, see [this wiki entry][s
 
 To preview some of the available themes, check the [themes wiki page][themes].
 
-### Fish-shell History Navigation
+### Fish-shell history navigation
 ![history-substring-search][fish_shell]
 
-### Syntax Highlighting
+### Syntax highlighting
 ![syntax-highlighting][syntax_highlighting]
 
 ### And much more!
@@ -40,65 +40,59 @@ Installation
 Installing Zim is easy. If you have a different shell framework installed (like oh-my-zsh or prezto),
 *uninstall those first to prevent conflicts*. It can be installed manually by following the instructions below:
 
-1. In a Zsh shell, clone the repository:
-  ```
-  git clone --recursive https://github.com/Eriner/zim.git ${ZDOTDIR:-${HOME}}/.zim
-  ```
+1. Start a Zsh shell:
 
-2. Paste this into your terminal to prepend the initialization templates to your configs:
-  ```
-  setopt EXTENDED_GLOB
-  for template_file ( ${ZDOTDIR:-${HOME}}/.zim/templates/* ); do
-    user_file="${ZDOTDIR:-${HOME}}/.${template_file:t}"
-    touch ${user_file}
-    ( print -rn "$(<${template_file})$(<${user_file})" >! ${user_file} ) 2>/dev/null
-  done
-  ```
+       zsh
 
-3. Set Zsh as the default shell:
-  ```
-  chsh -s =zsh
-  ```
+2. Clone the repository:
 
-4. Open a new terminal and finish optimization (this is only needed once, hereafter it will happen upon desktop/tty login):
-  ```
-  source ${ZDOTDIR:-${HOME}}/.zlogin
-  ```
+       git clone --recursive https://github.com/zimfw/zimfw.git ${ZDOTDIR:-${HOME}}/.zim
 
-5. You're done! Enjoy your Zsh IMproved! Take some time to read about the [available modules][modules] and tweak your `.zshrc` file.
+3. Paste this into your terminal to prepend the initialization templates to your configs:
+
+       for template_file in ${ZDOTDIR:-${HOME}}/.zim/templates/*; do
+         user_file="${ZDOTDIR:-${HOME}}/.${template_file:t}"
+         cat ${template_file} ${user_file}(.N) > ${user_file}.tmp && mv ${user_file}{.tmp,}
+       done
+
+4. Set Zsh as the default shell:
+
+       chsh -s =zsh
+
+5. Open a new terminal and finish optimization (this is only needed once, hereafter it will happen upon desktop/tty login):
+
+       source ${ZDOTDIR:-${HOME}}/.zlogin
+
+6. You're done! Enjoy your Zsh IMproved! Take some time to read about the [available modules][modules] and tweak your `.zshrc` file.
 
 Updating
 --------
 
-To update zim, run:
+To update Zim, run:
 
-```
-zmanage update
-```
+    zmanage update
 
-For more information about the `zmanage` tool, see the [meta module][meta-module] documentation.
+For more information about the `zmanage` tool, run `zmanage help`.
 
 Uninstalling
 ------------
 
-The best way to remove zim is to manually delete `~/.zim`, `~/.zimrc`, and
-remove the initialization lines from your `~/.zshrc`.
+The best way to remove Zim is to manually delete `~/.zim`, `~/.zimrc`, and
+remove the initialization lines from your `~/.zshrc` and `~/.zlogin`.
 
-However, there are some **experimental** convenience functions to remove zim:
+However, there are some **experimental** convenience functions to remove Zim:
 
 **NOTE: This functionality is experimental!**
 
-To remove zim, run:
-```
-zmanage remove
-```
+To remove Zim, run:
+
+    zmanage remove
 
 **NOTE: This functionality is experimental!**
 
 
 [fish_shell]: https://i.eriner.me/zim_history-substring-search.gif
 [syntax_highlighting]: https://i.eriner.me/zim_syntax-highlighting.gif
-[speed]: https://github.com/Eriner/zim/wiki/Speed
-[modules]: https://github.com/Eriner/zim/wiki/Modules
-[themes]: https://github.com/Eriner/zim/wiki/Themes
-[meta-module]: https://github.com/Eriner/zim/tree/master/modules/meta
+[speed]: https://github.com/zimfw/zimfw/wiki/Speed
+[modules]: https://github.com/zimfw/zimfw/wiki/Modules
+[themes]: https://github.com/zimfw/zimfw/wiki/Themes

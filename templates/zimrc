@@ -1,5 +1,3 @@
-
-
 #################
 # CORE SETTINGS #
 #################
@@ -12,7 +10,7 @@
 # The second line of modules may depend on options set by modules in the first
 # line. These dependencies are noted on the respective module's README.md.
 zmodules=(directory environment git git-info history input utility custom \
-          syntax-highlighting history-substring-search prompt completion)
+          prompt completion syntax-highlighting history-substring-search )
 
 
 ###################
@@ -30,17 +28,20 @@ zprompt_theme='steeef'
 # Completion
 #
 
-# set an optional host-specific filename for the completion cache file
-# if none is provided, the default '.zcompdump' is used.
+# Set an optional host-specific filename for the completion cache file. If none
+# is provided, the default '.zcompdump' is used.
 #zcompdump_file=".zcompdump-${HOST}-${ZSH_VERSION}"
 
 #
 # Utility
 #
 
-# Uncomment to enable command correction prompts
-# See: http://zsh.sourceforge.net/Doc/Release/Options.html#Input_002fOutput
+# Uncomment to enable spelling correction prompt for commands. See:
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Input_002fOutput
 #setopt CORRECT
+
+# Set custom spelling correction prompt
+#SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 
 #
 # Environment
@@ -57,8 +58,11 @@ ztermtitle='%n@%m:%~'
 # Input
 #
 
-# Uncomment to enable double-dot expansion.
-# This appends '../' to your input for each '.' you type after an initial '..'
+# Set to vi or emacs
+zinput_mode='emacs'
+
+# Uncomment to enable double-dot expansion. This appends '../' to your input for
+# each '.' you type after an initial '..'
 #zdouble_dot_expand='true'
 
 #
@@ -72,14 +76,12 @@ ztermtitle='%n@%m:%~'
 # removing the 'cursor' highlighter will fix the disappearing cursor problem
 zhighlighters=(main brackets cursor)
 
-
 #
 # SSH
 #
 
 # Load these ssh identities with the ssh module
 #zssh_ids=(id_rsa)
-
 
 #
 # Pacman
@@ -90,3 +92,5 @@ zhighlighters=(main brackets cursor)
 
 # Load any helper scripts as defined here
 #zpacman_helper=(aur)
+
+

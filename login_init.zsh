@@ -1,5 +1,3 @@
-
-
 #
 # startup file read in interactive login shells
 #
@@ -8,8 +6,7 @@
 #
 
 (
-  local file
-  local zmodule
+  local dir file
   setopt LOCAL_OPTIONS EXTENDED_GLOB
   autoload -U zrecompile
 
@@ -20,25 +17,17 @@
   zrecompile -pq ${ZDOTDIR:-${HOME}}/.zshrc
 
   # zcompile enabled module autoloaded functions
-  zrecompile -pq ${ZIM_HOME}/functions ${ZIM_HOME}/modules/${^zmodules}/functions/^([_.]*|prompt_*_setup|README*|*.zwc|*.zwc.old)(-.N)
+  for dir in ${ZIM_HOME}/modules/${^zmodules}/functions(/FN); do
+    zrecompile -pq ${dir}.zwc ${dir}/^(_*|prompt_*_setup|*.*)(-.N)
+  done
 
-  # zcompile enabled module init scripts
-  for zmodule (${zmodules}); do
-    zrecompile -pq ${ZIM_HOME}/modules/${zmodule}/init.zsh
+  # zcompile enabled module scripts
+  for file in ${ZIM_HOME}/modules/${^zmodules}/(^*test*/)#*.zsh{,-theme}(.NLk+1); do
+    zrecompile -pq ${file}
   done
 
   # zcompile all prompt setup scripts
   for file in ${ZIM_HOME}/modules/prompt/functions/prompt_*_setup; do
     zrecompile -pq ${file}
   done
-
-  # syntax-highlighting
-  for file in ${ZIM_HOME}/modules/syntax-highlighting/external/highlighters/**^test-data/*.zsh; do
-    zrecompile -pq ${file}
-  done
-  zrecompile -pq ${ZIM_HOME}/modules/syntax-highlighting/external/zsh-syntax-highlighting.zsh
-
-  # zsh-histery-substring-search
-  zrecompile -pq ${ZIM_HOME}/modules/history-substring-search/external/zsh-history-substring-search.zsh
-
 ) &!

@@ -1,4 +1,4 @@
-Git-info
+git-info
 ========
 
 Exposes git repository status information to prompts.
@@ -12,24 +12,24 @@ Git **1.7.2** is the
 Settings
 --------
 
-### Ignore Submodules
+### Ignore submodules
 
 Retrieving the status of a repository with submodules can take a long time.
-Submodules may be ignored when 'none', 'untracked', 'dirty', or 'all', which is
-the default.
+So by default 'all' submodules are ignored. Optionally, 'untracked', 'dirty', or
+'none' submodules can be ignored:
 
     zstyle ':zim:git-info' ignore-submodules 'none'
 
-### Verbose Mode
+### Verbose mode
 
 Verbose mode uses `git status` and computes the count of indexed, unindexed and
 also untracked files. It can be enabled with the following zstyle:
 
-    zstyle ':zim:git-info' verbose 'yes'
+    zstyle ':zim:git-info' verbose yes
 
-In non-verbose mode, the 'untracked' context is not available (see Main
-Contexts below), and untracked files are also not considered for computing the
-'dirty' context. Using `git status` or checking for untracked files can be
+In non-verbose mode, the 'untracked' context is not available (see *Main
+contexts* below), and untracked files are also not considered for computing the
+'dirty' context. Using `git status` to check for untracked files can be
 [expensive](https://gist.github.com/sindresorhus/3898739).
 
 Theming
@@ -41,11 +41,11 @@ a style is:
 
     zstyle ':zim:git-info:context' format 'string'
 
-### Main Contexts
+### Main contexts
 
 | Name      |  Code  | Description
-| --------- | :----: | --------------------------------------------------------
-| action    |   %s   | Special action name (see Special Action Contexts below)
+| --------- | :----: | ---------------------------------------------------------
+| action    |   %s   | Special action name (see *Special action contexts* below)
 | ahead     |   %A   | Commits ahead of remote count
 | behind    |   %B   | Commits behind of remote count
 | diverged  |   %V   | Diverged commits (both ahead and behind are yield when it's not defined)
@@ -65,10 +65,10 @@ state](http://gitfaq.org/articles/what-is-a-detached-head.html), on the other
 hand, `ahead`, `behind`, `diverged`, `branch` and `remote` are only available
 when an actual branch is checked out (so when **not** in 'detached HEAD' state).
 
-### Special Action Contexts
+### Special action contexts
 
 | Name                        | Format  | Default Value
-| --------------------------- | :-----: | -------------------------------------
+| --------------------------- | :-----: | --------------------------------------
 | action:apply                |  value  | 'apply'
 | action:bisect               |  value  | 'bisect'
 | action:cherry-pick          |  value  | 'cherry-pick'
@@ -99,6 +99,31 @@ Second, format how the above attributes are displayed in prompts:
       'prompt'  'git(%b%c)' \
       'rprompt' '[%R]'
 
-Last, add `$git_info[prompt]` to `$PROMPT` and `$git_info[rprompt]` to
-`$RPROMPT` respectively and call `git-info` in the `prompt_name_precmd` hook
-function.
+Last, add `${(e)git_info[prompt]}` and `${(e)git_info[rprompt]}` to `PS1` and
+`RPS1` respectively, and call `git-info` in the `prompt_name_precmd` hook function.
+
+Here's a complete example of a `prompt_example_setup` file:
+```zsh
+prompt_example_precmd() {
+  (( ${+functions[git-info]} )) && git-info
+}
+
+prompt_example_setup() {
+  autoload -Uz add-zsh-hook && add-zsh-hook precmd prompt_example_precmd
+
+  prompt_opts=(cr percent sp subst)
+
+  zstyle ':zim:git-info:branch' format 'branch:%b'
+  zstyle ':zim:git-info:commit' format 'commit:%c'
+  zstyle ':zim:git-info:remote' format 'remote:%R'
+
+  zstyle ':zim:git-info:keys' format \
+      'prompt'  'git(%b%c)' \
+      'rprompt' '[%R]'
+
+  PS1='${(e)git_info[prompt]}%# '
+  RPS1='${(e)git_info[rprompt]}'
+}
+
+prompt_example_setup "${@}"
+```
