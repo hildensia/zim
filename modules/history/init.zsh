@@ -15,7 +15,16 @@ setopt BANG_HIST
 # This option both imports new commands from the history file, and also causes your
 # typed commands to be appended to the history file (like specifying INC_APPEND_HISTORY).
 # The history lines are also output with timestamps ala EXTENDED_HISTORY.
-setopt SHARE_HISTORY
+# setopt SHARE_HISTORY
+
+# Save each command’s beginning timestamp (in seconds since the epoch) and the duration (in seconds) to the history file.
+# ‘: <beginning time>:<elapsed seconds>;<command>’.
+setopt EXTENDED_HISTORY
+
+# This options works like APPEND_HISTORY except that new history lines are added to the ${HISTFILE} incrementally
+# (as soon as they are entered), rather than waiting until the shell exits.
+setopt INC_APPEND_HISTORY
+
 
 # Do not enter command lines into the history list if they are duplicates of the previous event.
 setopt HIST_IGNORE_DUPS
